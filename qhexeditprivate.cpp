@@ -135,7 +135,7 @@ void QHexEditPrivate::processBackspaceEvents()
 void QHexEditPrivate::processHexPart(int key)
 {
     QHexCursor* cursor = this->_document->cursor();
-    uchar val = static_cast<uchar>(QString(key).toUInt(NULL, 16));
+    uchar val = static_cast<uchar>(QString(QChar(key)).toUInt(NULL, 16));
 
     cursor->removeSelection();
 
@@ -410,14 +410,14 @@ void QHexEditPrivate::mouseMoveEvent(QMouseEvent* event)
 
 void QHexEditPrivate::wheelEvent(QWheelEvent *event)
 {
-    if(!this->_document || !this->_document->length() || (event->orientation() != Qt::Vertical))
+    if(!this->_document || !this->_document->length() || (event->angleDelta().x() != 0))
     {
         event->ignore();
         return;
     }
 
     QHexCursor* cursor = this->_document->cursor();
-    sinteger_t numdegrees = event->delta() / 8, numsteps = numdegrees / 15;
+    sinteger_t numdegrees = event->pixelDelta().y() / 8, numsteps = numdegrees / 15;
     sinteger_t maxlines = this->_document->length() / QHexMetrics::BYTES_PER_LINE;
     sinteger_t pos = this->_vscrollbar->sliderPosition() - (numsteps * QHexEditPrivate::WHELL_SCROLL_LINES);
 

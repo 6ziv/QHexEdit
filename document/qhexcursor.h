@@ -14,7 +14,7 @@ class QHexCursor : public QObject
 
     public:
         explicit QHexCursor(QObject *parent = 0);
-        ~QHexCursor();
+        virtual ~QHexCursor() override;
         QPoint position() const;
         sinteger_t cursorX() const;
         sinteger_t cursorY() const;

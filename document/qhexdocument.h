@@ -16,7 +16,7 @@ class QHexDocument: public QObject
 
     private:
         explicit QHexDocument(QIODevice* device, QObject *parent = 0);
-        ~QHexDocument();
+        virtual ~QHexDocument()override;
 
     public:
         QHexCursor* cursor() const;

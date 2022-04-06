@@ -135,14 +135,14 @@ void QHexPainter::drawAddress(QPainter *painter, QHexTheme* theme, integer_t lin
         painter->setPen(theme->addressForeground());
 
     QString addr = QString("%1").arg(this->_document->baseAddress() + (line * QHexMetrics::BYTES_PER_LINE), this->_metrics->addressWidth(), 16, QLatin1Char('0')).toUpper();
-    painter->drawText(0, y, fm.width(addr), this->_metrics->charHeight(), Qt::AlignLeft | Qt::AlignTop, addr);
+    painter->drawText(0, y, fm.horizontalAdvance(addr), this->_metrics->charHeight(), Qt::AlignLeft | Qt::AlignTop, addr);
 }
 
 void QHexPainter::drawHex(QPainter *painter, uchar b, sinteger_t i, integer_t offset, integer_t &x, integer_t y)
 {
     QString s = QString("%1").arg(b, 2, 16, QLatin1Char('0')).toUpper();
     QFontMetrics fm = containerWidget->fontMetrics();
-    QRect r(x, y, fm.width(s), this->_metrics->charHeight());
+    QRect r(x, y, fm.horizontalAdvance(s), this->_metrics->charHeight());
 
     this->mark(painter, r, offset, QHexCursor::HexPart);
 
@@ -164,12 +164,12 @@ void QHexPainter::drawAscii(QPainter *painter, uchar b, integer_t offset, intege
 
     if(QChar(b).isPrint())
     {
-        w = fm.width(b);
-        s = QString(b);
+        w = fm.horizontalAdvance(QChar(b));
+        s = QString(QChar(b));
     }
     else
     {
-        w = fm.width(QHexPainter::UNPRINTABLE_CHAR);
+        w = fm.horizontalAdvance(QHexPainter::UNPRINTABLE_CHAR);
         s = QHexPainter::UNPRINTABLE_CHAR;
     }
 
